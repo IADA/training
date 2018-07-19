@@ -1,9 +1,11 @@
 <html>
     <p>Hi there!</p>
     <p>It works!</p>
-    <ul>
-      {% for post in posts %}
-        <li>{{post}}</li>
-      {% endfor %}
-    </ul>
+    {{results}}
+    
+    <form action="blog/templates/upload.php" method="post" enctype="multipart/form-data">
+    <p><input type='file' accept='image/jpeg' /></p>
+    <p><input type="submit" name="save" value="start" /></p>
+    </form>
+    
 </html>
