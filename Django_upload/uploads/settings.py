@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'uploads.core'
+    'uploads.core',
 ]
 
 MIDDLEWARE_CLASSES = [
