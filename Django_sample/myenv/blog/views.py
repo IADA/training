@@ -10,11 +10,12 @@ import sys
 
 # Create your views here.
 def post_list(request):
-    model = VGG16(weights='imagenet')
-    img = image.load_img("banana.jpg", target_size=(224, 224))
-    x = image.img_to_array(img)
-    x = np.expand_dims(x, axis=0)
-    preds = model.predict(preprocess_input(x))
-    results = decode_predictions(preds, top=5)[0]
+    #model = VGG16(weights='imagenet')
+    #img = image.load_img("banana.jpg", target_size=(224, 224))
+    #x = image.img_to_array(img)
+    #x = np.expand_dims(x, axis=0)
+    #preds = model.predict(preprocess_input(x))
+    #results = decode_predictions(preds, top=5)[0]
 
-    return render(request, 'blog/post_list.html', {'results':results})
+    #return render(request, 'blog/post_list.html', {'results':results})
+    return render(request, 'blog/post_list.html', {})
