@@ -7,6 +7,7 @@ let peer = null;
 let existingCall = null;
 
 // ブラウザの機能を利用してデバイスのビデオおよび音声を取得する
+// https://developer.mozilla.org/ja/docs/Web/API/Media_Streams_API
 navigator.mediaDevices.getUserMedia({video: true, audio: true})
 .then(function (stream) {
     // Success
@@ -78,3 +79,51 @@ peer.on('call', function(call){
     call.answer(localStream);
     setupCallEventHandlers(call);
 });
+
+function setupCallEventHandlers(call){
+    /*
+    今回作るアプリでは既に接続中の場合は一旦既存の接続を切断し、後からきた接続要求を優先します。 
+    また、切断処理等で利用するため、CallオブジェクトをexistingCallとして保持しておきます。
+    */
+    if (existingCall) {
+        existingCall.close();
+    };
+    existingCall = call;
+    
+    // 相手のカメラ映像・マイク音声を受信した際に発火します。
+    // 取得したStreamオブジェクトをvideo要素にセットします。
+    call.on('stream', function(stream){
+        addVideo(call,stream);
+        setupEndCallUI();
+        $('#their-id').text(call.remoteId);
+    });
+
+    // call.close()による切断処理が実行され、実際に切断されたら発火します。 
+    // このイベントは、call.close()実行した側、実行された側それぞれで発火します。call.peerで切断した相手のPeerIDを取得できます。
+    call.on('close', function(){
+        removeVideo(call.remoteId);
+        setupMakeCallUI();
+    });
+}
+
+/* UIセットアップ */
+// video要素の再生
+function addVideo(call,stream){
+    $('#their-video').get(0).srcObject = stream;
+}
+
+// video要素の削除
+function removeVideo(peerId){
+    $('#their-video').get(0).srcObject = undefined;
+}
+
+// ボタンの表示、非表示切り替え
+function setupMakeCallUI(){
+    $('#make-call').show();
+    $('#end-call').hide();
+}
+
+function setupEndCallUI() {
+    $('#make-call').hide();
+    $('#end-call').show();
+}
