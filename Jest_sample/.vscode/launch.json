@@ -7,14 +7,45 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug Jest",
-            "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+            "name": "test",
+            "program": "${workspaceRoot}/node_modules/jest/bin/jest",
             "args": [
-              "c:/GitHub/training/Jest_sample/test/api.test.ts",
+              "${fileBasename}", // https://code.visualstudio.com/docs/editor/variables-reference
               "--forceExit",
+              "--verbose",
               "--runInBand"
             ],
-            "console": "integratedTerminal"
-          }
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "test all",
+            "program": "${workspaceRoot}/node_modules/jest/bin/jest",
+            "args": [
+              "--forceExit",
+              "--verbose",
+              "--runInBand"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "coverage",
+            "program": "${workspaceRoot}/node_modules/jest/bin/jest",
+            "args": [
+              "--forceExit",
+              "--verbose",
+              "--coverage"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        }
     ]
 }
